@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-  context: path.resolve(__dirname),
+  context: __dirname,
   entry: "./lib/main.js",
   output: {
     filename: "bundle.js"

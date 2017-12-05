@@ -9440,14 +9440,39 @@ var d3 = _interopRequireWildcard(_d);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-d3.csv("../data/lakers_2016_2017.csv", function (data) {
-  console.log(data);
-  var shots = d3.select('svg').selectAll('g').data(data).enter().append('g').attr('class', 'shot').attr('transform', function (d) {
-    return "translate(" + d.converted_x * 10 + "," + d.converted_y * 10 + ")";
-  });
+(function () {
+  var width = 500,
+      height = 500;
 
-  shots.append("circle").attr('r', 5);
-});
+  var svg = d3.select("#chart").append("svg").attr("height", height).attr("width", width).append("g").attr("transform", "translate(0,0)");
+
+  var radiusScale = d3.scaleSqrt().domain([6, 403]).range([10, 50]);
+
+  var simulation = d3.forceSimulation().force("x", d3.forceX(width / 2).strength(0.05)).force("y", d3.forceY(height / 2).strength(0.05)).force("collide", d3.forceCollide(function (d) {
+    return radiusScale(d.shotsMade) + 1;
+  }));
+
+  d3.queue().defer(d3.csv, "../data/lakersFG_2016_2017.csv").await(ready);
+
+  function ready(error, datapoints) {
+
+    var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("r", function (d) {
+      return radiusScale(d.shotsMade);
+    }).attr("fill", "purple").on('click', function (d) {
+      console.log(d);
+    });
+
+    simulation.nodes(datapoints).on('tick', ticked);
+
+    function ticked() {
+      circles.attr("cx", function (d) {
+        return d.x;
+      }).attr("cy", function (d) {
+        return d.y;
+      });
+    }
+  }
+})();
 
 /***/ }),
 /* 172 */
