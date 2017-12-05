@@ -1,5 +1,7 @@
+var path = require('path');
+
 module.exports = {
-  context: __dirname,
+  context: path.resolve(__dirname),
   entry: "./lib/main.js",
   output: {
     filename: "bundle.js"

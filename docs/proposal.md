@@ -17,7 +17,7 @@ In addition, this project will include:
 
 ### Wireframes
 
-![wireframe](https://github.com/w-chun/NBA-Bubble/blob/master/wireframe.png)
+![wireframe](https://github.com/w-chun/NBA-Bubble/blob/master/Wireframe.png)
 
 ### Architecture and Technologies
 
