@@ -9460,35 +9460,38 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }
   }).strength(0.05);
 
-  var forceXCombine = d3.forceX(width / 2).strength(0.05);
+  var forceXReset = d3.forceX(width / 2).strength(0.05);
 
   var forceY = d3.forceY(function (d) {
     return height / 2;
   }).strength(0.05);
 
   var forceCollide = d3.forceCollide(function (d) {
-    return radiusScale(d.shotsMade) + 1;
+    return radiusScale(d.shotsMade) + 2;
   });
 
-  var simulation = d3.forceSimulation().force("x", forceXCombine).force("y", forceY).force("collide", forceCollide);
+  var simulation = d3.forceSimulation().force("x", forceXReset).force("y", forceY).force("collide", forceCollide);
 
   d3.queue().defer(d3.csv, "../data/lakersFG_2016_2017.csv").await(ready);
 
   function ready(error, datapoints) {
 
+    var tooltip = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "rgba(0,0,0,0.7)").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
+
     var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("r", function (d) {
       return radiusScale(d.shotsMade);
     }).attr("fill", function (d) {
       return "url(#" + d.player.replace(/ /g, "-") + ")";
-    }).on('click', function (d) {
-      console.log(d);
-    }).on('mouseover', function (d) {
-      d3.select(this).raise().append('text').attr('class', 'playerName').text(d.player);
-    }).on('mouseout', function (d) {
-      d3.selectAll('text.playerName').remove();
+    }).on("mouseover", function (d) {
+      tooltip.html(d.player + "<br/>\n              Shots Made: " + d.shotsMade + "</br>\n              FG%: " + d.fldGoalPct + "<br/>");
+      tooltip.style("visibility", "visible");
+    }).on("mousemove", function () {
+      return tooltip.style("top", d3.event.pageY - 15 + "px").style("left", d3.event.pageX + 10 + "px");
+    }).on("mouseout", function () {
+      return tooltip.style("visibility", "hidden");
     });
 
-    defs.selectAll(".artist-pattern").data(datapoints).enter().append("pattern").attr("class", "artist-pattern").attr("id", function (d) {
+    defs.selectAll(".player-pattern").data(datapoints).enter().append("pattern").attr("class", "player-pattern").attr("id", function (d) {
       return d.player.replace(/ /g, "-");
     }).attr("height", "100%").attr("width", "100%").attr("patternContentUnits", "objectBoundingBox").append("image").attr("height", 1).attr("weight", 1).attr("preserveAspectRadio", "none").attr("xmlns:xlink", "http://w3.org/1999/xlink").attr("xlink:href", function (d) {
       return d.imagePath;
@@ -9498,8 +9501,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       simulation.force("x", forceXSeparate).alphaTarget(0.5).restart();
     });
 
-    d3.select("#combine").on('click', function () {
-      simulation.force("x", forceXCombine).alphaTarget(0.5).restart();
+    d3.select("#reset").on('click', function () {
+      simulation.force("x", forceXReset).alphaTarget(0.5).restart();
     });
 
     simulation.nodes(datapoints).on('tick', ticked);
