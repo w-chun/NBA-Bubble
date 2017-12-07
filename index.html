@@ -8,23 +8,35 @@
   </head>
   <body>
     <div class="home-wrapper">
-      <div class="title-header">
-        <div class="nba-img"><img src="./images/nba-logo.png"></img></div>
-        <div class="title">Bubble</div>
+      <div class="title-header-container">
+        <div class="title">
+          <div class="nba-img"><img src="./images/nba-logo.png"></img></div>
+          <div class="title">Bubble</div>
+        </div>
+      </div>
+      <div class="filter">
+        <button id="percent">View By FG%</button>
+        <button id="reset">Reset</button>
+        <select id="selector"></select>
       </div>
       <div class="content-wrapper">
-        <div class="filter">
-          <button id="percent">View By FG%</button>
-          <button id="reset">Reset</button>
-          <select id="selector"></select>
-        </div>
         <div id="bubble"></div>
       </div>
-    <div>
+    </div>
 
     <script src="bundle.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
   </body>
+  <footer>
+    <div class="linkedin-github">
+      <ul>
+        <a href="https://www.linkedin.com/in/wilson-chun-58a86891/" target="_blank"><div class="linkedin"></div></a>
+        <li><a href="https://github.com/w-chun" target="_blank">
+          <div class="github"></div>
+        </a></li>
+      </ul>
+    </div>
+  </footer>
 </html>
 
 <!-- <svg id="canvas" height="1000px" width="1200px"></svg> -->

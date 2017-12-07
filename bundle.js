@@ -9465,21 +9465,21 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
   var forceXSeparate = d3.forceX(function (d) {
     if (d.fldGoalPct > .5) {
       console.log(window);
-      return width * .8;
+      return width * .85;
     } else if (d.fldGoalPct < .5 && d.fldGoalPct > .4) {
       return width * .55;
     } else if (d.fldGoalPct < .4 && d.fldGoalPct > .3) {
       return width * .27;
     } else {
-      return width * .1;
+      return width * .05;
     }
-  }).strength(0.08);
+  }).strength(0.1);
 
-  var forceXReset = d3.forceX(width / 2).strength(0.08);
+  var forceXReset = d3.forceX(width / 2).strength(0.1);
 
   var forceY = d3.forceY(function (d) {
     return height / 2;
-  }).strength(0.08);
+  }).strength(0.1);
 
   var forceCollide = d3.forceCollide(function (d) {
     return radiusScale(d.shotsMade) + 2;
@@ -9509,12 +9509,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     }).on("click", function (d, i) {
-      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .5 + "px").style("left", width * .7 + "px").style("visibility", "visible");
+      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .6 + "px").style("left", width * .67 + "px").style("visibility", "visible");
       simulation.force("x", d3.forceX(function (e) {
         if (e.idx == i) {
-          return width / 1.5;
+          return width * .72;
         } else {
-          return width / 4;
+          return width * .25;
         }
       })).force("y", d3.forceY(function (e) {
         if (e.idx == i) {
@@ -9522,7 +9522,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
         } else {
           return height / 2;
         }
-      })).alphaTarget(0.3).restart();
+      })).alphaTarget(0.25).restart();
       percentages.style("visibility", "hidden");
     });
 
@@ -9532,16 +9532,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return d.imagePath;
     });
 
-    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white").style("width", width * .8 + "px");
+    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white").style("width", width * .85 + "px");
 
     d3.select("#percent").on('click', function () {
-      simulation.force("x", forceXSeparate).alphaTarget(0.3).restart();
+      simulation.force("x", forceXSeparate).alphaTarget(0.25).restart();
       playerInfo.style("visibility", "hidden");
-      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", height * .2 + "px").style("left", width * .1 + "px");
+      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", height * .22 + "px");
+      // .style("left", (width * .1) + "px");
     });
 
     d3.select("#reset").on('click', function () {
-      simulation.force("x", forceXReset).alphaTarget(0.3).restart();
+      simulation.force("x", forceXReset).alphaTarget(0.25).restart();
       playerInfo.style("visibility", "hidden");
       percentages.style("visibility", "hidden");
     });

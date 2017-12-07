@@ -6,7 +6,7 @@
   flex-direction: column;
 }
 
-.title-header {
+.title-header-container {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -36,10 +36,12 @@
 
 .filter {
   display: flex;
-  flex-direction: column;
   position: relative;
   background-color: black;
+  width: 30%;
+  margin: auto;
 }
+
 .player:hover {
   stroke: purple;
   stroke-width: 3px;
@@ -58,4 +60,37 @@
 .percentages {
   display: flex;
   justify-content: space-between;
+}
+
+.linkedin-github {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  justify-content: center;
+}
+
+.linkedin-github ul{
+  list-style: none;
+  display: flex;
+}
+
+.linkedin {
+  width: 40px;
+  height: 40px;
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512115468/linkedin-logo-copy_pdq4jt_vximdh.png");
+  margin-right: 20px;
+}
+
+.linkedin:hover {
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1511466491/linkedin-logo-copy_pdq4jt.png")
+}
+
+.github {
+  width: 40px;
+  height: 40px;
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116165/github-512_fy2div.png")
+}
+
+.github:hover {
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116048/github-512_myckup.png")
 }
