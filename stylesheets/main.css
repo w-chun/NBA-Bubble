@@ -1,10 +1,61 @@
+
+.home-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.title-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.title {
+  display: flex;
+  font-size: 70px;
+  font-family: 'Chela One', cursive;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.nba-img {
+  width: 146px;
+  height: 103px;
+}
+
+.nba-img img {
+  width: 146px;
+  height: 103px;
+}
+
+.content-wrapper {
+  display: flex;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: black;
+}
 .player:hover {
   stroke: purple;
   stroke-width: 3px;
 }
 
+#bubble {
+  width: 100%;
+  height: 700px;
+  background-color: black;
+}
+
+.svg {
+  width: 100%;
+  height: 100%
+}
 .percentages {
   display: flex;
-  width: 1100px;
   justify-content: space-between;
 }

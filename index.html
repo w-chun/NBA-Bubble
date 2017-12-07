@@ -4,15 +4,27 @@
     <meta charset="utf-8">
     <title>NBA Bubble</title>
     <link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Chela+One" rel="stylesheet">
   </head>
   <body>
-    <h1>NBA Bubble</h1>
-    <button id="percent">View By FG%</button>
-    <button id="reset">Reset</button>
-    <select id="selector"></select>
-    <div id="chart"></div>
-    <svg id="canvas" height="1000px" width="1200px"></svg>
+    <div class="home-wrapper">
+      <div class="title-header">
+        <div class="nba-img"><img src="./images/nba-logo.png"></img></div>
+        <div class="title">Bubble</div>
+      </div>
+      <div class="content-wrapper">
+        <div class="filter">
+          <button id="percent">View By FG%</button>
+          <button id="reset">Reset</button>
+          <select id="selector"></select>
+        </div>
+        <div id="bubble"></div>
+      </div>
+    <div>
+
     <script src="bundle.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
   </body>
 </html>
+
+<!-- <svg id="canvas" height="1000px" width="1200px"></svg> -->

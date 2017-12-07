@@ -9441,26 +9441,37 @@ var d3 = _interopRequireWildcard(_d);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 (function () {
-  var width = 1400,
-      height = 500;
+  var width = window.innerWidth,
+      height = window.innerHeight;
 
-  var svg = d3.select("#chart").append("svg").attr("height", height).attr("width", width).append("g").attr("transform", "translate(0,0)");
+  var svg = d3.select("#bubble").append("svg").attr("class", "svg").append("g").attr("transform", "translate(0,0)");
 
   var defs = svg.append("defs");
 
-  defs.append("pattern").attr("id", "jordan-clarkson").attr("height", "100%").attr("width", "100%").attr("patternContentUnits", "objectBoundingBox").append("image").attr("height", 1).attr("weight", 1).attr("preserveAspectRadio", "none").attr("xmlns:xlink", "http://w3.org/1999/xlink").attr("xlink:href", "../images/jc6.png");
+  // defs.append("pattern")
+  //   .attr("id", "jordan-clarkson")
+  //   .attr("height", "100%")
+  //   .attr("width", "100%")
+  //   .attr("patternContentUnits", "objectBoundingBox")
+  //   .append("image")
+  //   .attr("height", 1)
+  //   .attr("weight", 1)
+  //   .attr("preserveAspectRadio", "none")
+  //   .attr("xmlns:xlink", "http://w3.org/1999/xlink")
+  //   .attr("xlink:href", "../images/jc6.png");
 
-  var radiusScale = d3.scaleSqrt().domain([6, 403]).range([10, 60]);
+  var radiusScale = d3.scaleSqrt().domain([6, 2729]).range([30, 80]);
 
   var forceXSeparate = d3.forceX(function (d) {
     if (d.fldGoalPct > .5) {
-      return 1000;
+      console.log(window);
+      return width * .8;
     } else if (d.fldGoalPct < .5 && d.fldGoalPct > .4) {
-      return 700;
+      return width * .55;
     } else if (d.fldGoalPct < .4 && d.fldGoalPct > .3) {
-      return 350;
+      return width * .27;
     } else {
-      return 100;
+      return width * .1;
     }
   }).strength(0.08);
 
@@ -9498,12 +9509,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     }).on("click", function (d, i) {
-      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", "300px").style("left", "685px").style("visibility", "visible");
+      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .5 + "px").style("left", width * .7 + "px").style("visibility", "visible");
       simulation.force("x", d3.forceX(function (e) {
         if (e.idx == i) {
-          return 750;
+          return width / 1.5;
         } else {
-          return 200;
+          return width / 4;
         }
       })).force("y", d3.forceY(function (e) {
         if (e.idx == i) {
@@ -9511,7 +9522,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
         } else {
           return height / 2;
         }
-      })).alphaTarget(0.4).restart();
+      })).alphaTarget(0.3).restart();
       percentages.style("visibility", "hidden");
     });
 
@@ -9521,16 +9532,16 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return d.imagePath;
     });
 
-    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
+    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white").style("width", width * .8 + "px");
 
     d3.select("#percent").on('click', function () {
-      simulation.force("x", forceXSeparate).alphaTarget(0.4).restart();
+      simulation.force("x", forceXSeparate).alphaTarget(0.3).restart();
       playerInfo.style("visibility", "hidden");
-      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", "100px");
+      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", height * .2 + "px").style("left", width * .1 + "px");
     });
 
     d3.select("#reset").on('click', function () {
-      simulation.force("x", forceXReset).alphaTarget(0.4).restart();
+      simulation.force("x", forceXReset).alphaTarget(0.3).restart();
       playerInfo.style("visibility", "hidden");
       percentages.style("visibility", "hidden");
     });
@@ -9548,7 +9559,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 })();
 
 // var shotChart = d3.csv("../data/lakers_2016_2017.csv", function(data) {
-
+//   var xScale = d3.scaleLinear()
+//     .domain([-200, 250])
+//     .range([100, 750]);
+//
+//   var yScale = d3.Linear()
+//     .domain([-50, 750])
+//     .range([100, 1150]);
 //
 //   var shots = d3.select('#canvas')
 //       .selectAll('g')
@@ -9557,7 +9574,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 //       .append('g')
 //         .attr('class', 'shot')
 //         .attr('transform', function(d) {
-//           return "translate(" + (d.x) + "," + (d.y) + ")";
+//           return "translate(" + xScale(d.x) + "," + yScale(d.y) + ")";
 //         })
 //       // .on('mouseover', function(d) {
 //       //     d3.select(this).raise()
