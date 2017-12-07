@@ -1,0 +1,4 @@
+.player:hover {
+  stroke: purple;
+  stroke-width: 3px;
+}

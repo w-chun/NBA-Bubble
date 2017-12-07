@@ -9458,13 +9458,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     } else {
       return 750;
     }
-  }).strength(0.05);
+  }).strength(0.08);
 
-  var forceXReset = d3.forceX(width / 2).strength(0.05);
+  var forceXReset = d3.forceX(width / 2).strength(0.08);
 
   var forceY = d3.forceY(function (d) {
     return height / 2;
-  }).strength(0.05);
+  }).strength(0.08);
 
   var forceCollide = d3.forceCollide(function (d) {
     return radiusScale(d.shotsMade) + 2;
@@ -9478,7 +9478,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
     var tooltip = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "rgba(0,0,0,0.7)").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
 
-    var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("r", function (d) {
+    var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("id", function (d) {
+      return "" + d.player.replace(/ /g, "-");
+    }).attr("r", function (d) {
       return radiusScale(d.shotsMade);
     }).attr("fill", function (d) {
       return "url(#" + d.player.replace(/ /g, "-") + ")";
@@ -9489,6 +9491,20 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return tooltip.style("top", d3.event.pageY - 15 + "px").style("left", d3.event.pageX + 10 + "px");
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
+    }).on("click", function (d, i) {
+      simulation.force("x", d3.forceX(function (e) {
+        if (e.idx == i) {
+          return 750;
+        } else {
+          return 200;
+        }
+      })).force("y", d3.forceY(function (e) {
+        if (e.idx == i) {
+          return height / 4;
+        } else {
+          return height / 2;
+        }
+      })).alphaTarget(0.5).restart();
     });
 
     defs.selectAll(".player-pattern").data(datapoints).enter().append("pattern").attr("class", "player-pattern").attr("id", function (d) {
@@ -9550,6 +9566,28 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 //       });
 //   });
 //
+// var players = d3.nest()
+//   .key(function(d) {
+//     return d.player;
+//   })
+//   .rollup(function(a) {
+//     return a.length;
+//   })
+//   .entries(datapoints);
+//
+// var selector = d3.select("#selector");
+//
+// selector
+//   .selectAll("option")
+//   .datapoints(players)
+//   .enter()
+//   .append("option")
+//     .text(function(d) {
+//       return d.key + ":" + d.value;
+//     })
+//     .attr("value", function(d) {
+//       return d.key;
+//     });
 
 /***/ }),
 /* 172 */
