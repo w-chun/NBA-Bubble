@@ -9441,7 +9441,7 @@ var d3 = _interopRequireWildcard(_d);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 (function () {
-  var width = 1000,
+  var width = 1400,
       height = 500;
 
   var svg = d3.select("#chart").append("svg").attr("height", height).attr("width", width).append("g").attr("transform", "translate(0,0)");
@@ -9453,10 +9453,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
   var radiusScale = d3.scaleSqrt().domain([6, 403]).range([10, 60]);
 
   var forceXSeparate = d3.forceX(function (d) {
-    if (d.fldGoalPct < .5) {
-      return 200;
+    if (d.fldGoalPct > .5) {
+      return 1000;
+    } else if (d.fldGoalPct < .5 && d.fldGoalPct > .4) {
+      return 700;
+    } else if (d.fldGoalPct < .4 && d.fldGoalPct > .3) {
+      return 350;
     } else {
-      return 750;
+      return 100;
     }
   }).strength(0.08);
 
@@ -9507,7 +9511,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
         } else {
           return height / 2;
         }
-      })).alphaTarget(0.5).restart();
+      })).alphaTarget(0.4).restart();
+      percentages.style("visibility", "hidden");
     });
 
     defs.selectAll(".player-pattern").data(datapoints).enter().append("pattern").attr("class", "player-pattern").attr("id", function (d) {
@@ -9516,13 +9521,18 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return d.imagePath;
     });
 
+    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
+
     d3.select("#percent").on('click', function () {
-      simulation.force("x", forceXSeparate).alphaTarget(0.5).restart();
+      simulation.force("x", forceXSeparate).alphaTarget(0.4).restart();
+      playerInfo.style("visibility", "hidden");
+      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", "100px");
     });
 
     d3.select("#reset").on('click', function () {
-      simulation.force("x", forceXReset).alphaTarget(0.5).restart();
+      simulation.force("x", forceXReset).alphaTarget(0.4).restart();
       playerInfo.style("visibility", "hidden");
+      percentages.style("visibility", "hidden");
     });
 
     simulation.nodes(datapoints).on('tick', ticked);
@@ -9537,27 +9547,27 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
   }
 })();
 
+// var shotChart = d3.csv("../data/lakers_2016_2017.csv", function(data) {
+
 //
-// d3.csv("../data/lakers_2016_2017.csv", function(data){
-//   console.log(data);
-//   var shots = d3.select('svg')
+//   var shots = d3.select('#canvas')
 //       .selectAll('g')
 //       .data(data)
 //       .enter()
 //       .append('g')
 //         .attr('class', 'shot')
 //         .attr('transform', function(d) {
-//           return "translate(" + d.y * 5 + "," + d.x * 5 + ")";
+//           return "translate(" + (d.x) + "," + (d.y) + ")";
 //         })
-//       .on('mouseover', function(d) {
-//           d3.select(this).raise()
-//             .append('text')
-//             .attr('class', 'playerName')
-//             .text(d.name);
-//       })
-//       .on('mouseout', function(d) {
-//           d3.selectAll('text.playerName').remove();
-//       });
+//       // .on('mouseover', function(d) {
+//       //     d3.select(this).raise()
+//       //       .append('text')
+//       //       .attr('class', 'playerName')
+//       //       .text(d.name);
+//       // })
+//       // .on('mouseout', function(d) {
+//       //     d3.selectAll('text.playerName').remove();
+//       // });
 //
 //     shots.append("circle")
 //       .attr('r', 5)
@@ -9568,30 +9578,50 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 //           return 'yellow';
 //         }
 //       });
+//
+//       var players = d3.nest()
+//       .key(function(d) {
+//         return d.name;
+//       })
+//       .rollup(function(a) {
+//         return a.length;
+//       })
+//       .entries(data);
+//
+//       players.unshift({"key": "Lakers",
+//         "value": d3.sum(players, function(d) {
+//           return d.value;
+//         })
+//       });
+//
+//       var selector = d3.select("#selector");
+//
+//       selector
+//         .selectAll("option")
+//         .data(players)
+//         .enter()
+//         .append("option")
+//         .text(function(d) {
+//           return d.key + " : " + d.value;
+//         })
+//         .attr("value", function(d) {
+//           return d.key;
+//       });
+//
+//       selector
+//         .on("change", function () {
+//           d3.selectAll(".shot")
+//             .attr("opacity", 1.0);
+//           var value = selector.property("value");
+//             if (value != "Lakers") {
+//               d3.selectAll(".shot")
+//                 .filter(function (d) {
+//                   return d.name !== value;
+//                 })
+//                 .attr("opacity", 0);
+//             }
+//         });
 //   });
-//
-// var players = d3.nest()
-//   .key(function(d) {
-//     return d.player;
-//   })
-//   .rollup(function(a) {
-//     return a.length;
-//   })
-//   .entries(datapoints);
-//
-// var selector = d3.select("#selector");
-//
-// selector
-//   .selectAll("option")
-//   .datapoints(players)
-//   .enter()
-//   .append("option")
-//     .text(function(d) {
-//       return d.key + ":" + d.value;
-//     })
-//     .attr("value", function(d) {
-//       return d.key;
-//     });
 
 /***/ }),
 /* 172 */
