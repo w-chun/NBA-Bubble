@@ -9478,6 +9478,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
     var tooltip = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "rgba(0,0,0,0.7)").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
 
+    var playerInfo = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "#673AB7").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
+
     var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("id", function (d) {
       return "" + d.player.replace(/ /g, "-");
     }).attr("r", function (d) {
@@ -9492,6 +9494,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     }).on("click", function (d, i) {
+      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", "300px").style("left", "685px").style("visibility", "visible");
       simulation.force("x", d3.forceX(function (e) {
         if (e.idx == i) {
           return 750;
@@ -9519,6 +9522,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
     d3.select("#reset").on('click', function () {
       simulation.force("x", forceXReset).alphaTarget(0.5).restart();
+      playerInfo.style("visibility", "hidden");
     });
 
     simulation.nodes(datapoints).on('tick', ticked);
