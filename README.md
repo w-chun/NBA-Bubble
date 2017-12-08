@@ -19,7 +19,7 @@ NBA Bubble is developed using Vanilla JavaScript with the addition of D3.js, whi
 
 The player bubbles were created and scaled by the number of shots the player made for the whole season. Each bubble then displays the player's name when hovered over by the user.  
 
-![Home]()
+![Home](https://github.com/w-chun/NBA-Bubble/blob/master/images/home.png)
 
 ```javascript
 
@@ -54,14 +54,14 @@ var circles = svg.selectAll(".player")
 
 ### Player Info
 
-![Player Info]()
+![Player Info](https://github.com/w-chun/NBA-Bubble/blob/master/images/playerinfo.png)
 
 When a user clicks on a player, the player is separated from the rest of the team and additional player stats are popped up.
 
 
 ### Filter
 
-![Filter]()
+![Filter](https://github.com/w-chun/NBA-Bubble/blob/master/images/filter.png)
 
 When the user clicks filter by FG%, the players are sorted to their perspective group for their shooting percentage throughout the year.
 
