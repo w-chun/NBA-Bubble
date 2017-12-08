@@ -9448,7 +9448,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
   var defs = svg.append("defs");
 
-  var radiusScale = d3.scaleSqrt().domain([6, 2729]).range([30, 80]);
+  var radiusScale = d3.scaleSqrt().domain([6, 2729]).range([20, 80]);
 
   var forceXSeparate = d3.forceX(function (d) {
     if (d.fldGoalPct > .5) {
@@ -9460,21 +9460,21 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     } else {
       return width * .05;
     }
-  }).strength(0.1);
+  }).strength(0.08);
 
-  var forceXReset = d3.forceX(width / 2).strength(0.1);
+  var forceXReset = d3.forceX(width / 2).strength(0.08);
 
   var forceY = d3.forceY(function (d) {
     return height / 2;
-  }).strength(0.1);
+  }).strength(0.08);
 
   var forceCollide = d3.forceCollide(function (d) {
-    return radiusScale(d.shotsMade) + 2;
+    return radiusScale(d.shotsMade) + 5;
   });
 
   var simulation = d3.forceSimulation().force("x", forceXReset).force("y", forceY).force("collide", forceCollide);
 
-  d3.queue().defer(d3.csv, "../data/lakersFG_2016_2017.csv").await(ready);
+  d3.queue().defer(d3.csv, "/data/lakersFG_2016_2017.csv").await(ready);
 
   function ready(error, datapoints) {
 
@@ -9527,7 +9527,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
         } else {
           return height / 2;
         }
-      })).alphaTarget(0.20).restart();
+      })).alphaTarget(0.10).restart();
       percentages.style("visibility", "hidden");
     });
 
@@ -9540,13 +9540,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("padding", "10px").style("border-radius", "5px").style("font", "18px 'Oswald', sans-serif").style("color", "#fdb927").style("width", "95%");
 
     d3.select("#percent").on('click', function () {
-      simulation.force("x", forceXSeparate).alphaTarget(0.20).restart();
+      simulation.force("x", forceXSeparate).alphaTarget(0.10).restart();
       playerInfo.style("visibility", "hidden");
       percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", "220px");
     });
 
     d3.select("#reset").on('click', function () {
-      simulation.force("x", forceXReset).alphaTarget(0.20).restart();
+      simulation.force("x", forceXReset).alphaTarget(0.10).restart();
       playerInfo.style("visibility", "hidden");
       percentages.style("visibility", "hidden");
     });
