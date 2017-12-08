@@ -64,12 +64,16 @@
   margin-bottom: 10px;
 }
 
-#selector {
+.selector {
+  display: flex;
+  height: 29px;
+}
+
+#year, #team {
   display: flex;
   background-color: #1D428A;
   font-size: 14px;
   color: white;
-  padding: 5px 10px 5px 10px;
 }
 
 #percent, #reset {
