@@ -9441,10 +9441,10 @@ var d3 = _interopRequireWildcard(_d);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 (function () {
-  var width = window.innerWidth,
-      height = window.innerHeight;
+  var width = window.screen.width,
+      height = window.screen.height;
 
-  var svg = d3.select("#bubble").append("svg").attr("class", "svg").append("g").attr("transform", "translate(0,0)").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 300 300");
+  var svg = d3.select("#bubble").append("svg").attr("class", "svg").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 1200 1200").classed("svg-content", true).append("g").attr("transform", "translate(0,0)");
 
   var defs = svg.append("defs");
 
@@ -9514,7 +9514,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     }).on("click", function (d, i) {
-      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                FG%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .7 + "px").style("left", width * .67 + "px").style("visibility", "visible");
+      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                FG%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", "75%").style("right", "20%").style("visibility", "visible");
       simulation.force("x", d3.forceX(function (e) {
         if (e.idx == i) {
           return width * .72;
@@ -9537,13 +9537,12 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return d.imagePath;
     });
 
-    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("padding", "10px").style("border-radius", "5px").style("font", "18px 'Oswald', sans-serif").style("color", "#fdb927").style("width", width * .9 + "px");
+    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("padding", "10px").style("border-radius", "5px").style("font", "18px 'Oswald', sans-serif").style("color", "#fdb927").style("width", "95%");
 
     d3.select("#percent").on('click', function () {
       simulation.force("x", forceXSeparate).alphaTarget(0.20).restart();
       playerInfo.style("visibility", "hidden");
       percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", "220px");
-      // .style("left", (width * .1) + "px");
     });
 
     d3.select("#reset").on('click', function () {

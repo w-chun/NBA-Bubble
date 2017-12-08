@@ -93,15 +93,14 @@
 
 #bubble {
   width: 100%;
-  height: 700px;
   background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(14, 14, 14, 0.5)), url("../images/StaplesCenter.png");
   background-size: 100% 100%;
 }
 
-.svg {
+/*.svg {
   width: 100%;
   height: 100%;
-}
+}*/
 
 .percentages {
   display: flex;
@@ -139,4 +138,19 @@
 
 .github:hover {
   background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116048/github-512_myckup.png")
+}
+
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 70%;
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
