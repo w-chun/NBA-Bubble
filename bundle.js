@@ -9444,27 +9444,14 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
   var width = window.innerWidth,
       height = window.innerHeight;
 
-  var svg = d3.select("#bubble").append("svg").attr("class", "svg").append("g").attr("transform", "translate(0,0)");
+  var svg = d3.select("#bubble").append("svg").attr("class", "svg").append("g").attr("transform", "translate(0,0)").attr("preserveAspectRatio", "xMinYMin meet").attr("viewBox", "0 0 300 300");
 
   var defs = svg.append("defs");
-
-  // defs.append("pattern")
-  //   .attr("id", "jordan-clarkson")
-  //   .attr("height", "100%")
-  //   .attr("width", "100%")
-  //   .attr("patternContentUnits", "objectBoundingBox")
-  //   .append("image")
-  //   .attr("height", 1)
-  //   .attr("weight", 1)
-  //   .attr("preserveAspectRadio", "none")
-  //   .attr("xmlns:xlink", "http://w3.org/1999/xlink")
-  //   .attr("xlink:href", "../images/jc6.png");
 
   var radiusScale = d3.scaleSqrt().domain([6, 2729]).range([30, 80]);
 
   var forceXSeparate = d3.forceX(function (d) {
     if (d.fldGoalPct > .5) {
-      console.log(window);
       return width * .85;
     } else if (d.fldGoalPct < .5 && d.fldGoalPct > .4) {
       return width * .55;
@@ -9491,9 +9478,27 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
   function ready(error, datapoints) {
 
+    var players = d3.nest().key(function (d) {
+      return d.player;
+    }).rollup(function (a) {
+      return a.length;
+    }).entries(datapoints);
+
+    var selector = d3.select("#selector");
+
+    var years = d3.nest().key(function () {
+      return "Year";
+    }).rollup(function () {
+      return "2016-2017";
+    }).entries(datapoints);
+
+    selector.selectAll("option").data(years).enter().append("option").text(function (d) {
+      return d.key + " : " + d.value;
+    });
+
     var tooltip = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "rgba(0,0,0,0.7)").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
 
-    var playerInfo = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "#673AB7").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
+    var playerInfo = d3.select("body").append("div").style("visibility", "hidden").style("position", "absolute").style("background-color", "rgba(103, 58, 183, 0.7)").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white");
 
     var circles = svg.selectAll(".player").data(datapoints).enter().append("circle").attr("class", "player").attr("id", function (d) {
       return "" + d.player.replace(/ /g, "-");
@@ -9509,7 +9514,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
     }).on("mouseout", function () {
       return tooltip.style("visibility", "hidden");
     }).on("click", function (d, i) {
-      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                Fg%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .6 + "px").style("left", width * .67 + "px").style("visibility", "visible");
+      playerInfo.html("<h3>" + d.player + "</h3><br/>\n                Shots Made: " + d.shotsMade + "<br/>\n                FG%: " + d.fldGoalPct + "<br/>\n                3pt Made: " + d.threesMade + "</br>\n                3pt Attempts: " + d.threesTaken + "</br>\n                3pt%: " + d.threesPct + "</br>\n                Total Shots: " + d.totalShots + "</br>").style("top", height * .7 + "px").style("left", width * .67 + "px").style("visibility", "visible");
       simulation.force("x", d3.forceX(function (e) {
         if (e.idx == i) {
           return width * .72;
@@ -9522,7 +9527,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
         } else {
           return height / 2;
         }
-      })).alphaTarget(0.25).restart();
+      })).alphaTarget(0.20).restart();
       percentages.style("visibility", "hidden");
     });
 
@@ -9532,17 +9537,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
       return d.imagePath;
     });
 
-    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("background-color", "black").style("padding", "10px").style("border-radius", "5px").style("font", "14px sans-serif").style("color", "white").style("width", width * .85 + "px");
+    var percentages = d3.select("body").append("div").attr("class", "percentages").style("visibility", "hidden").style("position", "absolute").style("padding", "10px").style("border-radius", "5px").style("font", "18px 'Oswald', sans-serif").style("color", "#fdb927").style("width", width * .9 + "px");
 
     d3.select("#percent").on('click', function () {
-      simulation.force("x", forceXSeparate).alphaTarget(0.25).restart();
+      simulation.force("x", forceXSeparate).alphaTarget(0.20).restart();
       playerInfo.style("visibility", "hidden");
-      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", height * .22 + "px");
+      percentages.html("<div>Under 20%</div>\n            <div>30% - 40%</div>\n            <div>40% - 50%</div>\n            <div>Greater than 50%</div>").style("visibility", "visible").style("top", "220px");
       // .style("left", (width * .1) + "px");
     });
 
     d3.select("#reset").on('click', function () {
-      simulation.force("x", forceXReset).alphaTarget(0.25).restart();
+      simulation.force("x", forceXReset).alphaTarget(0.20).restart();
       playerInfo.style("visibility", "hidden");
       percentages.style("visibility", "hidden");
     });

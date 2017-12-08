@@ -30,16 +30,60 @@
   height: 103px;
 }
 
+.description {
+  display: flex;
+  margin: auto;
+  font-family: 'Chela One', cursive;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+
 .content-wrapper {
   display: flex;
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .filter {
   display: flex;
   position: relative;
-  background-color: black;
-  width: 30%;
+}
+
+.filter-description {
+  display: flex;
+  font-family: 'Oswald', sans-serif;
   margin: auto;
+}
+
+.filter button {
+  margin-bottom: 10px;
+}
+
+#selector {
+  display: flex;
+  background-color: #1D428A;
+  font-size: 14px;
+  color: white;
+  padding: 5px 10px 5px 10px;
+}
+
+#percent, #reset {
+  background-color: #1D428A;
+  font-size: 14px;
+  color: white;
+  padding: 5px 10px 5px 10px;
+}
+
+#percent:hover, #reset:hover {
+  background-color: #1D428A;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .player:hover {
@@ -50,13 +94,15 @@
 #bubble {
   width: 100%;
   height: 700px;
-  background-color: black;
+  background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(14, 14, 14, 0.5)), url("../images/StaplesCenter.png");
+  background-size: 100% 100%;
 }
 
 .svg {
   width: 100%;
-  height: 100%
+  height: 100%;
 }
+
 .percentages {
   display: flex;
   justify-content: space-between;

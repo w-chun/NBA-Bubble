@@ -5,6 +5,7 @@
     <title>NBA Bubble</title>
     <link rel="stylesheet" type="text/css" href="./stylesheets/main.css">
     <link href="https://fonts.googleapis.com/css?family=Chela+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   </head>
   <body>
     <div class="home-wrapper">
@@ -14,10 +15,16 @@
           <div class="title">Bubble</div>
         </div>
       </div>
-      <div class="filter">
-        <button id="percent">View By FG%</button>
-        <button id="reset">Reset</button>
-        <select id="selector"></select>
+      <div class="description">A place to view your team's stats!</div>
+      <div class="filter-description">Click a player to see more info!</div>
+      <div class="filter-container">
+        <div class="filter">
+          <button id="percent">View By FG%</button>
+          <button id="reset">Reset</button>
+        </div>
+        <div class="selector">
+          <select id="selector"></select>
+        </div>
       </div>
       <div class="content-wrapper">
         <div id="bubble"></div>
