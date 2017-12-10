@@ -158,3 +158,11 @@
     top: 0;
     left: 0;
 }
+
+.disclaimer {
+  display: flex;
+  margin: auto;
+  font-size: 10px;
+  font-family: 'Oswald', sans-serif;
+  justify-content: center;
+}
