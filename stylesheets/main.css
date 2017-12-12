@@ -91,7 +91,7 @@
 }
 
 .player:hover {
-  stroke: purple;
+  stroke: rgba(103, 58, 183, 0.7);
   stroke-width: 3px;
 }
 
