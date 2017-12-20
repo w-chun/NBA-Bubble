@@ -81,23 +81,26 @@
   font-size: 14px;
   color: white;
   padding: 5px 10px 5px 10px;
+  border-radius: 5px;
 }
 
 #percent:hover, #reset:hover {
   background-color: #1D428A;
   font-size: 14px;
+  box-shadow: 2px 2px 2px #bbb;
   text-decoration: underline;
   cursor: pointer;
 }
 
 .player:hover {
-  stroke: rgba(103, 58, 183, 0.7);
+  /* stroke: rgba(103, 58, 183, 0.7); */
+  stroke: rgba(29, 66, 138, 0.7);
   stroke-width: 3px;
 }
 
 #bubble {
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(14, 14, 14, 0.5)), url("../images/oracle.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.5),rgba(14, 14, 14, 0.5)), url("../images/StaplesCenter.png");
   background-size: 100% 100%;
 }
 
