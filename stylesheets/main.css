@@ -140,11 +140,23 @@
 .github {
   width: 40px;
   height: 40px;
-  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116165/github-512_fy2div.png")
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116165/github-512_fy2div.png");
+  margin-right: 20px;
 }
 
 .github:hover {
   background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1512116048/github-512_myckup.png")
+}
+
+.website {
+  width: 40px;
+  height: 40px;
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1515112803/website_phi1ht.png");
+  margin-right: 20px;
+}
+
+.website:hover {
+  background: url("http://res.cloudinary.com/dih798zsl/image/upload/c_scale,w_40/v1515112785/website_mr8xve.png")
 }
 
 .svg-container {
